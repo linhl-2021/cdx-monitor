@@ -74,16 +74,16 @@ def main():
 
     content_feishu = "ChatGPT额度查询\n"
     
-    max_email_len = max(len(r['email']) for r in results)
-    max_percent_len = max(len(str(r['used_percent'])) for r in results)
-    
     num = 1
-    max_reset_len = max(len(r['reset_at']) for r in results)
     
     for r in results:
-        percent = str(r['used_percent']).ljust(6)
-        reset_at = r['reset_at'].ljust(max_reset_len)
-        content_feishu += f"{num}. 已用: {percent}%, 重置时间: {reset_at}, 账号: {r['email']}\n"
+        percent_str = f"{r['used_percent']:>3}"
+        content_feishu += (
+            f"{num}.\t"
+            f"已用: {percent_str} %,\t"
+            f"重置时间: {r['reset_at']},\t"
+            f"账号: {r['email']}\n"
+        )
         num += 1
     send_message(content_feishu)
 
