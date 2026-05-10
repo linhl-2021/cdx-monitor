@@ -76,7 +76,7 @@ def main():
     for r in results:
         content_feishu += f"账号: {r['email']}, 已用: {r['used_percent']}%, 重置时间: {r['reset_at']}\n"
 
-    # send_message(content_feishu)
+    send_message(content_feishu)
 
 if __name__ == '__main__':
     main()
