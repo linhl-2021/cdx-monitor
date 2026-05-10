@@ -1,0 +1,40 @@
+name: Daily Python Script
+
+on:
+  workflow_dispatch:
+  push:
+  schedule:
+    - cron: '20 22 * * *'
+  watch:
+   types: [started]
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.REPO_PAT }}
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8 # 或你想要使用的Python版本
+
+    - name: Install dependencies
+      run: |
+        pip install requests
+
+    - name: Run script
+      run: python gpt_usage_query.py # 替换为你的脚本路径和名称
+
+    - name: Configure Git
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+
+    # - name: Commit and Push
+    #   run: |
+    #     git add -A
+    #     git commit -m "Add generated file" || echo "No changes to commit"
+    #     git push
